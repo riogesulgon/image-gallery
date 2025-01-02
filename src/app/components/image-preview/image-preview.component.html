@@ -1,0 +1,6 @@
+<div class="preview-overlay" (click)="closePreview()">
+  <div class="preview-container" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closePreview()">×</button>
+    <img [src]="imagePath" [alt]="'Preview image'" class="preview-image">
+  </div>
+</div>

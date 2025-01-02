@@ -1,0 +1,30 @@
+<div class="gallery-container">
+  <div class="gallery-grid">
+    @for (image of images; track image) {
+      <div class="image-card" (click)="openPreview(image)">
+        <img [src]="image" [alt]="'Gallery image'" loading="lazy">
+      </div>
+    }
+  </div>
+  
+  <div class="pagination-controls">
+    <button 
+      class="pagination-button" 
+      [disabled]="currentPage === 1"
+      (click)="previousPage()">
+      Previous
+    </button>
+    
+    <span class="pagination-info">
+      Page {{ currentPage }} of {{ totalPages }}
+      ({{ totalImages }} images)
+    </span>
+    
+    <button 
+      class="pagination-button" 
+      [disabled]="currentPage === totalPages"
+      (click)="nextPage()">
+      Next
+    </button>
+  </div>
+</div>
