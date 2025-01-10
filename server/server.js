@@ -100,6 +100,44 @@ app.post('/api/update-directory', async (req, res) => {
     }
 });
 
+// Delete image endpoint
+app.delete('/api/images', async (req, res) => {
+    try {
+        const imagePath = req.query.path;
+        if (!imagePath) {
+            return res.status(400).json({ error: 'Image path is required' });
+        }
+
+        // Decode the URL-encoded path and get the filename
+        const decodedPath = decodeURIComponent(imagePath);
+        const filename = decodedPath.replace('/images/', '');
+        const fullPath = path.join(imageDirectory, filename);
+
+        console.log('Attempting to delete image:', fullPath);
+
+        // Verify the file exists and is within the image directory
+        if (!fullPath.startsWith(imageDirectory)) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        try {
+            await fs.access(fullPath, fs.constants.W_OK);
+        } catch (err) {
+            console.error('File access error:', err);
+            return res.status(404).json({ error: 'Image not found or not accessible' });
+        }
+
+        // Delete the file
+        await fs.unlink(fullPath);
+        console.log('Successfully deleted image:', fullPath);
+        
+        res.json({ success: true, message: 'Image deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting image:', error);
+        res.status(500).json({ error: 'Failed to delete image', details: error.message });
+    }
+});
+
 app.get('/api/images', async (req, res) => {
     try {
         console.log('Current image directory:', imageDirectory);
@@ -114,7 +152,7 @@ app.get('/api/images', async (req, res) => {
         }
         
         const page = parseInt(req.query.page) || 1;
-        const pageSize = 6;
+        const pageSize = 12;
         
         const files = await fs.readdir(imageDirectory);
         console.log('Files in directory:', files);
@@ -165,7 +203,7 @@ app.get('/', async (req, res) => {
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Image Gallery Server</title>
+                <title>Browsa</title>
                 <style>
                     body {
                         font-family: Arial, sans-serif;
@@ -199,7 +237,6 @@ app.get('/', async (req, res) => {
             </head>
             <body>
                 <div class="container">
-                    <h1>Image Gallery Server</h1>
                     <p>Scan this QR code to access the gallery:</p>
                     <img src="${qrDataUrl}" alt="QR Code">
                     <div class="url">

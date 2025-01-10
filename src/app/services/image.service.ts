@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, switchMap, map } from 'rxjs';
+import { Observable, Subject, switchMap, map, tap } from 'rxjs';
 import { ServerUrlService } from './server-url.service';
 
 export interface PagedImages {
@@ -59,5 +59,23 @@ export class ImageService {
 
   getRefreshTrigger(): Observable<void> {
     return this.refreshTrigger.asObservable();
+  }
+
+  deleteImage(imagePath: string): Observable<void> {
+    return this.serverUrlService.getApiUrl().pipe(
+      switchMap(apiUrl => {
+        // Convert full URL back to relative path
+        const relativePath = imagePath.replace(apiUrl, '');
+        return this.http.delete<void>(`${apiUrl}/api/images`, {
+          params: { path: relativePath }
+        }).pipe(
+          tap(() => {
+            // Trigger refresh after successful deletion
+            this.refreshImages();
+          }),
+          map(() => undefined)
+        );
+      })
+    );
   }
 }

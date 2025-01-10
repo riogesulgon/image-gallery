@@ -1,6 +1,5 @@
 <div class="app-container">
   <header>
-    <h1>{{ title }}</h1>
     <div class="collapsible-section">
       <button class="toggle-button" [class.collapsed]="!isQrCodeVisible" (click)="toggleQrCode()">
         {{ isQrCodeVisible ? 'Hide' : 'Show' }} QR Code
@@ -39,7 +38,6 @@
    </div>
  </header>
   <main>
-    <app-gallery></app-gallery>
     <router-outlet></router-outlet>
   </main>
 </div>

@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0] - 2025-01-10
+
+### Added
+- QR code functionality with angularx-qrcode integration
+- Context menu component for enhanced image interaction
+- Long press directive for mobile support
+
+### Changed
+- Upgraded to Angular 19.0.0
+- Updated all Angular dependencies to their latest versions
+- Enhanced image preview component with new features
+- Improved gallery component layout and responsiveness
+
 ## [1.0.0] - 2024-03-19
 
 ### Initial Release

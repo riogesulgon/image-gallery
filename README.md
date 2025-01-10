@@ -1,4 +1,4 @@
-# Image Gallery v1.0.0
+# Browsa v1.1.0
 
 A web application for viewing and managing images from any directory on your system. Built with Angular and Node.js, this application provides a responsive, network-accessible interface for browsing and viewing your image collections.
 
@@ -10,13 +10,15 @@ A web application for viewing and managing images from any directory on your sys
 - Image preview with full-size view
 - Network accessible - view your images from any device on your local network
 - QR code for easy mobile access
+- Context menu for enhanced image interaction
+- Mobile-friendly with long press support
 - Comprehensive error handling and user feedback
 - Real-time directory validation and access checks
 - Automatic gallery refresh on directory changes
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v18 or higher)
 - npm (comes with Node.js)
 - Angular CLI (`npm install -g @angular/cli`)
 - Read access to image directories you want to browse
@@ -71,6 +73,19 @@ The application will start with the default image directory set to `/home/rio/Pi
    - Access the QR code page at `http://[your-ip]:3000`
    - Scan the QR code with your mobile device
    - Or enter `http://[your-ip]:4200` in your browser
+
+## Mobile Features
+
+1. Long Press:
+   - Press and hold an image to open the context menu
+   - Access additional options without right-clicking
+   - Smooth interaction optimized for touch devices
+
+2. Context Menu:
+   - Quick access to image actions
+   - Open image in new tab
+   - Download image
+   - Copy image URL
 
 ## Changing Image Directory
 

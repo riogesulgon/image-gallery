@@ -13,10 +13,10 @@ import { ImageService } from './services/image.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [RouterOutlet, GalleryComponent, QRCodeComponent, AsyncPipe, FormsModule]
+  imports: [RouterOutlet, QRCodeComponent, AsyncPipe, FormsModule]
 })
 export class AppComponent implements OnInit {
-  title = 'Image Gallery';
+  title = 'Browsa';
   serverUrl$: Observable<string>;
   imageDirectory$: Observable<string>;
   newDirectory = '';
