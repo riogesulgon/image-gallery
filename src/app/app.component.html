@@ -7,6 +7,25 @@
       <p class="server-url">{{ serverUrl }}</p>
     </div>
     }
+    <div class="directory-settings">
+      <div class="current-directory">
+        @if (imageDirectory$ | async; as currentDir) {
+        <p>Current Directory: {{ currentDir }}</p>
+        }
+      </div>
+      <div class="directory-input">
+        <input 
+          type="text" 
+          [(ngModel)]="newDirectory" 
+          placeholder="Enter new directory path"
+          class="directory-textfield"
+        >
+        <button (click)="updateDirectory()" class="update-button">Update Directory</button>
+      </div>
+      @if (updateError) {
+      <p class="error-message">{{ updateError }}</p>
+      }
+    </div>
   </header>
   <main>
     <app-gallery></app-gallery>

@@ -1,9 +1,19 @@
 <div class="gallery-container">
   <div class="gallery-grid">
-    @for (image of images; track image) {
-      <div class="image-card" (click)="openPreview(image)">
-        <img [src]="image" [alt]="'Gallery image'" loading="lazy">
-      </div>
+    @if (images.length === 0) {
+      <div class="no-images">No images found in the current directory</div>
+    } @else {
+      @for (image of images; track image) {
+        <div class="image-card" (click)="openPreview(image)">
+          <img
+            [src]="image"
+            [alt]="'Gallery image'"
+            loading="lazy"
+            (error)="onImageError($event, image)"
+            (load)="onImageLoad($event, image)"
+          >
+        </div>
+      }
     }
   </div>
   
