@@ -1,32 +1,43 @@
 <div class="app-container">
   <header>
     <h1>{{ title }}</h1>
-    @if (serverUrl$ | async; as serverUrl) {
-    <div class="qr-code-container">
-      <qrcode [qrdata]="serverUrl" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
-      <p class="server-url">{{ serverUrl }}</p>
-    </div>
-    }
-    <div class="directory-settings">
-      <div class="current-directory">
-        @if (imageDirectory$ | async; as currentDir) {
-        <p>Current Directory: {{ currentDir }}</p>
-        }
+    <div class="collapsible-section">
+      <button class="toggle-button" [class.collapsed]="!isQrCodeVisible" (click)="toggleQrCode()">
+        {{ isQrCodeVisible ? 'Hide' : 'Show' }} QR Code
+      </button>
+      @if (serverUrl$ | async; as serverUrl) {
+      <div class="qr-code-container" [class.collapsed]="!isQrCodeVisible">
+        <qrcode [qrdata]="serverUrl" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+        <p class="server-url">{{ serverUrl }}</p>
       </div>
-      <div class="directory-input">
-        <input 
-          type="text" 
-          [(ngModel)]="newDirectory" 
-          placeholder="Enter new directory path"
-          class="directory-textfield"
-        >
-        <button (click)="updateDirectory()" class="update-button">Update Directory</button>
-      </div>
-      @if (updateError) {
-      <p class="error-message">{{ updateError }}</p>
       }
     </div>
-  </header>
+
+    <div class="collapsible-section">
+      <button class="toggle-button" [class.collapsed]="!isDirectoryVisible" (click)="toggleDirectory()">
+        {{ isDirectoryVisible ? 'Hide' : 'Show' }} Directory Settings
+      </button>
+      <div class="directory-settings" [class.collapsed]="!isDirectoryVisible">
+        <div class="current-directory">
+          @if (imageDirectory$ | async; as currentDir) {
+          <p>Current Directory: {{ currentDir }}</p>
+          }
+        </div>
+       <div class="directory-input">
+         <input
+           type="text"
+           [(ngModel)]="newDirectory"
+           placeholder="Enter new directory path"
+           class="directory-textfield"
+         >
+         <button (click)="updateDirectory()" class="update-button">Update Directory</button>
+       </div>
+       @if (updateError) {
+       <p class="error-message">{{ updateError }}</p>
+       }
+     </div>
+   </div>
+ </header>
   <main>
     <app-gallery></app-gallery>
     <router-outlet></router-outlet>

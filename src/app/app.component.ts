@@ -21,6 +21,16 @@ export class AppComponent implements OnInit {
   imageDirectory$: Observable<string>;
   newDirectory = '';
   updateError = '';
+  isQrCodeVisible = true;
+  isDirectoryVisible = true;
+
+  toggleQrCode() {
+    this.isQrCodeVisible = !this.isQrCodeVisible;
+  }
+
+  toggleDirectory() {
+    this.isDirectoryVisible = !this.isDirectoryVisible;
+  }
 
   constructor(
     private serverUrlService: ServerUrlService,

@@ -22,24 +22,48 @@ export class ServerUrlService {
     });
   }
 
+  private baseUrlSubject = new BehaviorSubject<string>('');
+  private baseUrl$ = this.baseUrlSubject.asObservable();
+
+  private apiUrl = '';
+  private frontendUrl = '';
+
   private getBaseUrl(): string {
-    return window.location.protocol + '//' + window.location.hostname + ':3000';
+    return this.frontendUrl || (window.location.protocol + '//' + window.location.hostname + ':4200');
+  }
+
+  private getApiBaseUrl(): string {
+    return this.apiUrl || (window.location.protocol + '//' + window.location.hostname + ':3000');
   }
 
   private getServerInfo(): Observable<ServerInfo> {
-    return this.http.get<ServerInfo>(`${this.getBaseUrl()}/api/server-info`);
+    const initialUrl = window.location.protocol + '//' + window.location.hostname + ':3000';
+    return this.http.get<ServerInfo>(`${initialUrl}/api/server-info`).pipe(
+      map(info => {
+        this.apiUrl = `${window.location.protocol}//${info.ip}:3000`;
+        this.frontendUrl = `${window.location.protocol}//${info.ip}:4200`;
+        this.baseUrlSubject.next(this.frontendUrl);
+        return info;
+      })
+    );
   }
 
   getServerUrl(): Observable<string> {
+    return this.baseUrl$.pipe(
+      map(url => url || this.getBaseUrl())
+    );
+  }
+
+  getApiUrl(): Observable<string> {
     return new Observable(subscriber => {
-      subscriber.next(this.getBaseUrl());
+      subscriber.next(this.getApiBaseUrl());
       subscriber.complete();
     });
   }
 
   updateImageDirectory(directory: string): Observable<{success: boolean, imageDirectory: string}> {
     return this.http.post<{success: boolean, imageDirectory: string}>(
-      `${this.getBaseUrl()}/api/update-directory`,
+      `${this.getApiBaseUrl()}/api/update-directory`,
       { directory }
     ).pipe(
       map(response => {

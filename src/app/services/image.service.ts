@@ -27,10 +27,10 @@ export class ImageService {
   }
 
   getImages(page: number = 1): Observable<PagedImages> {
-    return this.serverUrlService.getServerUrl().pipe(
-      switchMap(serverUrl => {
-        console.log('Server URL:', serverUrl);
-        return this.http.get<PagedImages>(`${serverUrl}/api/images`, {
+    return this.serverUrlService.getApiUrl().pipe(
+      switchMap(apiUrl => {
+        console.log('API URL:', apiUrl);
+        return this.http.get<PagedImages>(`${apiUrl}/api/images`, {
           params: { page: page.toString() }
         }).pipe(
           map((response: PagedImages) => {
@@ -38,7 +38,7 @@ export class ImageService {
             const result = {
               ...response,
               images: response.images.map((imagePath: string) => {
-                const fullPath = `${serverUrl}${imagePath}`;
+                const fullPath = `${apiUrl}${imagePath}`;
                 console.log('Full image path:', fullPath);
                 return fullPath;
               })

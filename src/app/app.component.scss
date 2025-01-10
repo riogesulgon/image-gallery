@@ -16,14 +16,65 @@ header {
   }
 }
 
+.collapsible-section {
+  margin-bottom: 1rem;
+
+  .toggle-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transform: rotate(0);
+      transition: transform 0.2s;
+    }
+
+    &:not(.collapsed)::after {
+      transform: rotate(180deg);
+    }
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &:active {
+      background-color: #004085;
+    }
+  }
+}
+
 .qr-code-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
   padding: 1rem;
   background-color: #f8f8f8;
   border-radius: 8px;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  overflow: hidden;
+  max-height: 300px;
+  opacity: 1;
+
+  &.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+  }
 
   .server-url {
     margin: 0.5rem 0 0;
@@ -33,10 +84,21 @@ header {
 }
 
 .directory-settings {
-  margin: 1rem 0;
+  margin-top: 0.5rem;
   padding: 1rem;
   background-color: #f8f8f8;
   border-radius: 8px;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  overflow: hidden;
+  max-height: 300px;
+  opacity: 1;
+
+  &.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+  }
 
   .current-directory {
     margin-bottom: 1rem;
