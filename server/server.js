@@ -29,6 +29,14 @@ app.use(cors());
 app.use('/images', express.static('/home/rio/Pictures/Screenshots'));
 
 // Get list of images
+// Get server IP and port
+app.get('/api/server-info', (req, res) => {
+    res.json({
+        ip: LOCAL_IP,
+        port: PORT  // Use the actual server port
+    });
+});
+
 app.get('/api/images', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;

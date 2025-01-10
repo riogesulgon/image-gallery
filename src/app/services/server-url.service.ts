@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
+interface ServerInfo {
+  ip: string;
+  port: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,15 +14,9 @@ export class ServerUrlService {
   constructor(private http: HttpClient) {}
 
   getServerUrl(): Observable<string> {
-    // Extract the base URL from an image URL
-    return this.http.get<any>('http://localhost:3000/api/images').pipe(
-      map(response => {
-        if (response.images && response.images.length > 0) {
-          const imageUrl = new URL(response.images[0]);
-          return `${imageUrl.protocol}//${imageUrl.host}`;
-        }
-        return 'http://localhost:3000'; // Fallback
-      })
+    const serverUrl = window.location.protocol + '//' + window.location.hostname + ':3000';
+    return this.http.get<ServerInfo>(`${serverUrl}/api/server-info`).pipe(
+      map(info => `http://${info.ip}:${info.port}`)
     );
   }
 }

@@ -1,59 +1,66 @@
-# ImageGallery
+# Image Gallery
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+A web application for viewing and managing images from your Screenshots folder. The application is built with Angular and includes a Node.js backend server.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- View images from your Screenshots directory
+- Responsive grid layout
+- Image preview with full-size view
+- Network accessible - view your images from any device on your local network
+- QR code for easy mobile access
 
+## Prerequisites
+
+- Node.js (v14 or higher)
+- npm (comes with Node.js)
+- Angular CLI (`npm install -g @angular/cli`)
+
+## Installation
+
+1. Install frontend dependencies:
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Install backend dependencies:
 ```bash
-ng generate component component-name
+cd server
+npm install
+cd ..
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Running the Application
 
+1. Start the backend server:
 ```bash
-ng generate --help
+cd server
+npm start
 ```
 
-## Building
-
-To build the project run:
-
+2. In a new terminal, build and serve the Angular application:
 ```bash
+# Build the app for production
 ng build
+
+# Serve the app with network access
+ng serve --host 0.0.0.0
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Accessing the Application
 
-## Running unit tests
+1. On the same machine:
+   - Open your browser and navigate to `http://localhost:4200`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+2. From other devices on your network:
+   - Access the QR code page at `http://[your-ip]:3000`
+   - Scan the QR code with your mobile device
+   - Or enter `http://[your-ip]:4200` in your browser
 
+## Troubleshooting
+
+If you encounter port conflicts, run these commands before starting the servers:
 ```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# Free up the required ports
+fuser -k 3000/tcp  # For the backend server
+fuser -k 4200/tcp  # For the Angular development server

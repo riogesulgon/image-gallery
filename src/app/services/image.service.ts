@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
+import { ServerUrlService } from './server-url.service';
 
 export interface PagedImages {
   images: string[];
@@ -13,12 +14,14 @@ export interface PagedImages {
   providedIn: 'root'
 })
 export class ImageService {
-  private readonly apiUrl = 'http://localhost:3000/api';
-
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private serverUrlService: ServerUrlService
+  ) {}
 
   getImages(page: number = 1): Observable<PagedImages> {
-    return this.http.get<PagedImages>(`${this.apiUrl}/images`, {
+    const serverUrl = window.location.protocol + '//' + window.location.hostname + ':3000';
+    return this.http.get<PagedImages>(`${serverUrl}/api/images`, {
       params: { page: page.toString() }
     });
   }
